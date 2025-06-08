@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <script>
+  if (localStorage.getItem("nguoiDung")) {
+    window.location.href = "index.html"; // Chuyển đến trang chính nếu đã đăng nhập
+  }
+</script>
+
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Đăng nhập / Đăng ký - Nông Dân Số</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 50%, #a5d6a7 100%);
+      background-image: url('a9e38bd3-a5e4-4398-a103-5944ed82ab45.png');
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: 300px auto;
+      background-attachment: fixed;
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .background-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(255, 255, 255, 0.3);
+      z-index: -1;
+    }
+
+    .auth-container {
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      width: 100%;
+      max-width: 400px;
+      z-index: 1;
+    }
+
+    .auth-container h2 {
+      text-align: center;
+      color: #2e7d32;
+    }
+
+    .auth-container input {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+
+    .auth-container button {
+      width: 100%;
+      background-color: #2e7d32;
+      color: white;
+      border: none;
+      padding: 12px;
+      font-size: 16px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .auth-container button:hover {
+      background-color: #1b5e20;
+    }
+
+    .toggle-link {
+      margin-top: 15px;
+      text-align: center;
+      color: #2e7d32;
+      cursor: pointer;
+    }
+
+    .toggle-link:hover {
+      text-decoration: underline;
+    }
+
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+<div class="background-overlay"></div>
+
+<div class="auth-container">
+  <form id="login-form">
+    <h2>🔐 Đăng nhập</h2>
+    <input type="text" placeholder="Tên đăng nhập" required />
+    <input type="password" placeholder="Mật khẩu" required />
+    <button type="submit">Đăng nhập</button>
+    <div class="toggle-link" onclick="switchForm('register')">Chưa có tài khoản? Đăng ký</div>
+  </form>
+
+  <form id="register-form" class="hidden">
+    <h2>📝 Đăng ký</h2>
+    <input type="text" placeholder="Họ và tên" required />
+    <input type="text" placeholder="Tên đăng nhập" required />
+    <input type="email" placeholder="Email" required />
+    <input type="password" placeholder="Mật khẩu" required />
+    <button type="submit">Tạo tài khoản</button>
+    <div class="toggle-link" onclick="switchForm('login')">Đã có tài khoản? Đăng nhập</div>
+  </form>
+</div>
+
+<script>
+  function switchForm(form) {
+    const login = document.getElementById('login-form');
+    const register = document.getElementById('register-form');
+    if (form === 'register') {
+      login.classList.add('hidden');
+      register.classList.remove('hidden');
+    } else {
+      register.classList.add('hidden');
+      login.classList.remove('hidden');
+    }
+  }
+
+  document.getElementById("login-form").addEventListener("submit", function(e) {
+    e.preventDefault();
+    const username = this.querySelector("input[type='text']").value.trim();
+    if (username) {
+      localStorage.setItem("nguoiDung", username);
+      window.location.href = "index.html";
+    } else {
+      alert("Vui lòng nhập tên đăng nhập.");
+    }
+  });
+
+  document.getElementById("register-form").addEventListener("submit", function(e) {
+    e.preventDefault();
+    const username = this.querySelector("input[placeholder='Tên đăng nhập']").value.trim();
+    if (username) {
+      localStorage.setItem("nguoiDung", username);
+      window.location.href = "index.html";
+    } else {
+      alert("Vui lòng nhập đầy đủ thông tin.");
+    }
+  });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,385 @@
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <script>
+  if (!localStorage.getItem("nguoiDung")) {
+    window.location.href = "dang-nhap.html"; // Chuyển về trang đăng nhập
+  }
+</script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Hỗ trợ kỹ thuật - Nông Dân Số</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      color: #2e7d32;
+      position: relative;
+      z-index: 1;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url('https://chatgpt.com/backend-api/public_content/enc/eyJpZCI6Im1fNjg0MzllZWY5MDc4ODE5MTlhNmJlMTFiNjUyZTMzOWY6ZmlsZV8wMDAwMDAwMGFkZjQ2MWZkODNlN2YxZWEzNmM2ZTc1NyIsInRzIjoiNDg1OTA2IiwicCI6InB5aSIsInNpZyI6IjZhMmZhMTc5MDJkMzVjOTU0YjQ4OTczZWI2ZDhhM2Q5NTc5NzdkM2Q0MzllYzgxZGU4NDNlODFhMDJmZmZiNDEiLCJ2IjoiMCIsImdpem1vX2lkIjpudWxsfQ==');
+      background-size: cover;
+      background-position: center;
+      filter: blur(3px) brightness(0.85);
+      z-index: -1;
+    }
+
+    .overlay {
+      background-color: rgba(255, 255, 255, 0.85);
+      padding: 0px 0;
+      min-height: 100vh;
+    }
+
+    header, footer {
+      background-color: #2e7d32;
+      color: white;
+      text-align: center;
+      padding: 20px;
+    }
+
+    nav {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #c8e6c9;
+      padding: 10px 20px;
+      gap: 10px;
+    }
+
+    .nav-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: #2e7d32;
+      font-weight: bold;
+      background-color: #ffffff;
+      padding: 10px 15px;
+      border-radius: 6px;
+      font-size: 16px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .nav-links a:hover {
+      background-color: #a5d6a7;
+    }
+.search-bar-wrapper {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .search-bar-wrapper input {
+      padding: 10px 15px;
+      font-size: 16px;
+      width: 200px;
+      min-width: 180px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+
+    .search-bar-wrapper button {
+      padding: 10px 15px;
+      font-size: 16px;
+      background-color: #2e7d32;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .search-bar-wrapper button:hover {
+      background-color: #1b5e20;
+    }
+
+   
+
+    .content {
+      padding: 20px;
+      text-align: center;
+    }
+
+    img {
+      width: 100%;
+      max-width: 600px;
+      border-radius: 12px;
+      margin-top: 20px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    .support-box {
+      max-width: 700px;
+      margin: 30px auto;
+      background-color: #ffffff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      text-align: left;
+    }
+
+    select {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      margin-top: 10px;
+    }
+
+    .tra-cuu {
+      margin-top: 20px;
+      background-color: #f9fbe7;
+      padding: 15px;
+      border-left: 6px solid #81c784;
+      border-radius: 6px;
+    }
+
+    .tra-cuu h4 {
+      margin-top: 0;
+    }
+  .highlight-header {
+  background: linear-gradient(135deg, #2e7d32, #43a047);
+  color: white;
+  text-align: center;
+  padding: 50px 20px;
+  font-family: 'Segoe UI', sans-serif;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+.highlight-header h1 {
+  font-size: 40px;
+  margin: 10px 0;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.highlight-header p {
+  font-size: 18px;
+  margin-top: 8px;
+  color: #e0f2f1;
+}
+ .logo-fixed {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  z-index: 1000;
+}
+.logo-fixed img {
+  height: 160px;
+  width: auto;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+
+ </style>
+</head>
+<body>
+  <div class="logo-fixed">
+  <a href="index.html">
+    <img src="https://scontent.fsgn5-9.fna.fbcdn.net/v/t1.15752-9/494857258_1336898017408461_5422686939762103212_n.png?stp=dst-png_s480x480&_nc_cat=102&ccb=1-7&_nc_sid=0024fc&_nc_eui2=AeGUquvVRaPIsXtSKgUllw2Wny-fF0Tz-5WfL58XRPP7laOQlj3j2C4-mhBQGuI1Y_9BcWtBf4lvgS0plW4r-pYn&_nc_ohc=PIC44RlxiqgQ7kNvwHBYAgA&_nc_oc=AdmFQm5VbqJK6DL9pNgr_y0Vw3ud-Eg8_c3PCGysEnAJnZHc6F0GzyYqDbym1YuSFb1MVCKO0qis7FM1VKc51h-k&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=scontent.fsgn5-9.fna&oh=03_Q7cD2gH9zKYlhZI9kzPsqNGrjr6zSGNtL2z7PMEQLjU-6oRvLQ&oe=686C8090" alt="Logo" />
+  </a>
+</div>
+  <div class="overlay">
+    <header class="highlight-header">
+      <h1>🛠 Hỗ trợ kỹ thuật</h1>
+      <p>Giải pháp kỹ thuật và công nghệ dành cho bà con nông dân</p>
+    </header>
+
+    <nav>
+      <div class="nav-links">
+        <a href="index.html">🏠 Trang chủ</a>
+        <a href="san-pham.html">📦 Sản phẩm</a>
+        <a href="dien-dan.html">💬 Diễn đàn</a>
+        <a href="mua-vu.html">📅 Mùa vụ</a>
+        <a href="ho-tro.html">🛠 Hỗ trợ</a>
+        <a href="cho-nong-dan.html">🛒 Chợ nông sản</a>
+
+        <a href="dang-nhap.html">🔐 Đăng nhập</a>
+      </div>
+      <div class="search-bar-wrapper">
+        <input type="text" id="global-search" placeholder="🔍 Tìm kiếm..." />
+        <button onclick="searchContent()">Tìm</button>
+      </div>
+    </nav>
+
+    <div class="content">
+      <h2>📚 Tra cứu tài liệu kỹ thuật</h2>
+      <p>Chọn chủ đề cần xem để nhận hướng dẫn canh tác, xử lý sâu bệnh hoặc cải tạo đất.</p>
+      <img src="https://tl.cdnchinhphu.vn/344445545208135680/2025/6/4/tham-quan-mo-hinh-4-6-174904702858456471432.jpg" alt="Hỗ trợ kỹ thuật">
+    </div>
+
+    <div class="support-box">
+      <h3>🔍 Chọn mục cần hỗ trợ</h3>
+      <select id="chon-muc" onchange="hienThiNoiDung()">
+        <option value="">-- Chọn chủ đề kỹ thuật --</option>
+        <option value="sau-benh">🦟 Xử lý sâu bệnh</option>
+        <option value="dat">🪱 Cải tạo đất</option>
+        <option value="trong-cay">🌾 Hướng dẫn trồng cây</option>
+      </select>
+
+      <div id="ket-qua-tra-cuu" class="tra-cuu">
+        <p>Vui lòng chọn một chủ đề để bắt đầu.</p>
+      </div>
+    </div>
+<div class="articles" style="max-width: 800px; margin: 40px auto; padding: 0 20px;">
+  <h3 style="color: #1b5e20;">📡 Bài viết nổi bật: Ứng dụng công nghệ trong nông nghiệp</h3>
+
+ <div style="display: flex; flex-wrap: wrap; align-items: flex-start; gap: 20px; max-width: 900px; margin: 40px auto; padding: 0 20px;">
+  <!-- Hình ảnh -->
+  <img src="https://atpro.com.vn/wp-content/uploads/2023/06/cac-loai-cam-bien-do-am-dat-trong-nong-nghiep2-1024x1062.jpg" alt="Cảm biến đất" style="width: 220px; border-radius: 10px; box-shadow: 0 0 8px rgba(0,0,0,0.1);">
+
+  <!-- Nội dung bài viết -->
+  <div style="flex: 1; min-width: 250px;">
+    <h3 style="color: #1b5e20;">🚜 Cảm biến giám sát độ ẩm đất</h3>
+    <p>Việc sử dụng cảm biến giúp bà con biết khi nào cần tưới tiêu hợp lý, tiết kiệm nước và tăng hiệu quả cây trồng.</p>
+    <p>Thiết bị này thường được đặt trong đất canh tác và gửi dữ liệu về điện thoại hoặc hệ thống trung tâm. Một số cảm biến còn có khả năng cảnh báo khi đất quá khô hoặc quá ẩm.</p>
+    <p>Đây là một giải pháp đặc biệt phù hợp với trồng rau, cây ăn quả và lúa ở quy mô từ hộ gia đình đến trang trại lớn.</p>
+  </div>
+</div>
+
+
+ <!-- Bài viết: Ứng dụng vệ tinh và drone -->
+<div style="display: flex; flex-wrap: wrap; align-items: flex-start; gap: 20px; max-width: 900px; margin: 40px auto; padding: 0 20px;">
+  <img src="https://bcp.cdnchinhphu.vn/334894974524682240/2023/1/16/ung-dung-may-bay-khong-nguoi-lai-phun-thuoc-tru-sau-1-16738624124321711875358.jpg" alt="Drone giám sát" style="width: 220px; border-radius: 10px; box-shadow: 0 0 8px rgba(0,0,0,0.1);">
+  <div style="flex: 1; min-width: 250px;">
+    <h3 style="color: #1b5e20;">🛰️ Ứng dụng vệ tinh và drone</h3>
+    <p>Máy bay không người lái và hình ảnh vệ tinh giúp bà con theo dõi tình trạng ruộng từ trên cao một cách tổng thể.</p>
+    <p>Drone có thể phát hiện nhanh các khu vực sâu bệnh, khô hạn, ngập úng hoặc thiếu phân bón.</p>
+    <p>Thông tin thu thập có thể dùng để lập bản đồ cây trồng, tối ưu hóa chi phí chăm sóc và thu hoạch.</p>
+  </div>
+</div>
+
+<!-- Bài viết: Mô hình nhà kính tự động -->
+<div style="display: flex; flex-wrap: wrap; align-items: flex-start; gap: 20px; max-width: 900px; margin: 40px auto; padding: 0 20px;">
+  <img src="https://cdn-i.vtcnews.vn/files/ctv.congnghe4/2017/07/20/1-2140587.jpg" alt="Nhà kính tự động" style="width: 220px; border-radius: 10px; box-shadow: 0 0 8px rgba(0,0,0,0.1);">
+  <div style="flex: 1; min-width: 250px;">
+    <h3 style="color: #1b5e20;">🏡 Mô hình nhà kính tự động</h3>
+    <p>Hệ thống nhà kính hiện đại có thể điều khiển nhiệt độ, độ ẩm, ánh sáng và thông gió tự động theo nhu cầu cây trồng.</p>
+    <p>Giải pháp này giúp canh tác rau củ quanh năm, giảm rủi ro thời tiết và tăng năng suất ổn định.</p>
+    <p>Nhà kính thông minh còn có thể kết nối Internet để bà con giám sát từ xa qua điện thoại.</p>
+  </div>
+</div>
+
+  </div>
+ <footer>
+      © 2025 Nông Dân Số. Tất cả quyền được bảo lưu.
+    </footer>
+  <script>
+    function hienThiNoiDung() {
+      const value = document.getElementById("chon-muc").value;
+      const ketQua = document.getElementById("ket-qua-tra-cuu");
+
+      let noidung = "";
+      if (value === "sau-benh") {
+        noidung = `
+          <h4>🦟 Xử lý sâu bệnh</h4>
+          <p>- Sử dụng thuốc sinh học đúng liều lượng.</p>
+          <p>- Trồng cây xen canh để hạn chế sâu hại.</p>
+          <p>- Theo dõi thường xuyên vườn để phát hiện sớm.</p>`;
+      } else if (value === "dat") {
+        noidung = `
+          <h4>🪱 Cải tạo đất</h4>
+          <p>- Luân canh cây trồng hợp lý để tái tạo dưỡng chất.</p>
+          <p>- Bón phân hữu cơ hoai mục, phân xanh, vôi nếu cần.</p>
+          <p>- Đảm bảo hệ vi sinh vật có lợi phát triển tốt.</p>`;
+      } else if (value === "trong-cay") {
+        noidung = `
+          <h4>🌾 Hướng dẫn trồng cây hiệu quả</h4>
+          <p>- Chọn giống cây phù hợp với đất và khí hậu.</p>
+          <p>- Tưới tiêu đều đặn, tránh úng hoặc khô hạn.</p>
+          <p>- Tỉa cành và bón phân đúng thời điểm.</p>`;
+      } else {
+        noidung = "<p>Vui lòng chọn mục cần tra cứu ở trên.</p>";
+      }
+
+      ketQua.innerHTML = noidung;
+    }
+
+    function searchContent() {
+      const keyword = document.getElementById("global-search").value.toLowerCase();
+      if (!keyword.trim()) {
+        alert("Vui lòng nhập từ khóa tìm kiếm.");
+        return;
+      }
+
+      const pages = [
+        { keyword: "gạo", url: "san-pham.html" },
+        { keyword: "sản phẩm", url: "san-pham.html" },
+        { keyword: "diễn đàn", url: "dien-dan.html" },
+        { keyword: "bài viết", url: "dien-dan.html" },
+        { keyword: "hỗ trợ", url: "ho-tro.html" },
+        { keyword: "sâu bệnh", url: "ho-tro.html" },
+        { keyword: "mùa vụ", url: "mua-vu.html" },
+        { keyword: "thời tiết", url: "mua-vu.html" },
+        { keyword: "trang chủ", url: "index.html" },
+      ];
+
+      const match = pages.find(p => keyword.includes(p.keyword));
+      if (match) {
+        window.location.href = match.url;
+      } else {
+        alert("❌ Không tìm thấy nội dung phù hợp. Vui lòng thử lại.");
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+      const ten = localStorage.getItem("nguoiDung");
+      const nav = document.querySelector("nav");
+
+      if (ten && nav) {
+        const loginLink = [...nav.querySelectorAll("a")].find(a => a.textContent.includes("Đăng nhập"));
+        if (loginLink) loginLink.remove();
+
+        const userWrapper = document.createElement("div");
+        userWrapper.style.display = "flex";
+        userWrapper.style.alignItems = "center";
+        userWrapper.style.gap = "10px";
+
+        const userName = document.createElement("span");
+        userName.textContent = `👤 Xin chào, ${ten}`;
+        userName.style.fontWeight = "bold";
+
+        const logoutBtn = document.createElement("button");
+        logoutBtn.textContent = "🔓 Đăng xuất";
+        logoutBtn.style.padding = "6px 10px";
+        logoutBtn.style.border = "none";
+        logoutBtn.style.backgroundColor = "#c62828";
+        logoutBtn.style.color = "#fff";
+        logoutBtn.style.borderRadius = "6px";
+        logoutBtn.style.cursor = "pointer";
+
+        logoutBtn.onclick = () => {
+          localStorage.removeItem("nguoiDung");
+          location.reload();
+        };
+
+        userWrapper.appendChild(userName);
+        userWrapper.appendChild(logoutBtn);
+        nav.appendChild(userWrapper);
+      }
+    });
+  </script>
+</body>
+</html>
+

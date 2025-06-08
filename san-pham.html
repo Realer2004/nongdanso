@@ -1,0 +1,587 @@
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <script>
+  if (!localStorage.getItem("nguoiDung")) {
+    window.location.href = "dang-nhap.html"; // Chuyển về trang đăng nhập
+  }
+</script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sản phẩm - Nông Dân Số</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      color: #2e7d32;
+      position: relative;
+      z-index: 1;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url('https://chatgpt.com/backend-api/public_content/enc/eyJpZCI6Im1fNjg0MzllZWY5MDc4ODE5MTlhNmJlMTFiNjUyZTMzOWY6ZmlsZV8wMDAwMDAwMGFkZjQ2MWZkODNlN2YxZWEzNmM2ZTc1NyIsInRzIjoiNDg1OTA2IiwicCI6InB5aSIsInNpZyI6IjZhMmZhMTc5MDJkMzVjOTU0YjQ4OTczZWI2ZDhhM2Q5NTc5NzdkM2Q0MzllYzgxZGU4NDNlODFhMDJmZmZiNDEiLCJ2IjoiMCIsImdpem1vX2lkIjpudWxsfQ==');
+      background-size: cover;
+      background-position: center;
+      filter: blur(3px) brightness(0.85);
+      z-index: -1;
+    }
+
+    .overlay {
+      background-color: rgba(255, 255, 255, 0.85);
+      min-height: 100vh;
+      padding-bottom: 40px;
+    }
+
+    header, footer {
+      background-color: #2e7d32;
+      color: white;
+      text-align: center;
+      padding: 20px;
+    }
+
+    nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #c8e6c9;
+  padding: 10px 20px;
+  gap: 10px;
+}
+
+.nav-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: #2e7d32;
+  font-weight: bold;
+  background-color: #ffffff;
+  padding: 10px 15px;
+  border-radius: 6px;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.nav-links a:hover {
+  background-color: #a5d6a7;
+}
+.search-bar-wrapper {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .search-bar-wrapper input {
+      padding: 10px 15px;
+      font-size: 16px;
+      width: 200px;
+      min-width: 180px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+
+    .search-bar-wrapper button {
+      padding: 10px 15px;
+      font-size: 16px;
+      background-color: #2e7d32;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .search-bar-wrapper button:hover {
+      background-color: #1b5e20;
+    }
+
+
+    .content {
+      padding: 20px;
+      text-align: center;
+    }
+
+    .product-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 30px;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    .form-wrapper, .products {
+      flex: 1 1 45%;
+      background-color: #ffffff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    .products h3, .form-wrapper h3 {
+      text-align: center;
+      color: #2e7d32;
+    }
+
+    .product-item {
+      border-bottom: 1px solid #ccc;
+      padding: 10px 0;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .product-item img {
+      width: 80px;
+      height: 80px;
+      object-fit: cover;
+      border-radius: 6px;
+    }
+
+    .product-info {
+      flex: 1;
+    }
+
+    .product-info strong {
+      font-size: 16px;
+      color: #1b5e20;
+    }
+
+    .product-info em {
+      color: #388e3c;
+      font-size: 14px;
+    }
+
+    form label {
+      font-weight: bold;
+      display: block;
+      margin-top: 10px;
+    }
+
+    form input, form textarea {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    form button {
+      margin-top: 15px;
+      width: 100%;
+      background-color: #2e7d32;
+      color: white;
+      padding: 10px;
+      font-size: 16px;
+      border: none;
+      border-radius: 6px;
+    }
+
+    form button:hover {
+      background-color: #1b5e20;
+    }
+
+    .success-msg {
+      color: green;
+      font-weight: bold;
+      text-align: center;
+      margin-top: 10px;
+    }
+  .search-container {
+  margin: 20px auto;
+  max-width: 600px;
+  text-align: center;
+}
+.search-container input {
+  width: 60%;
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+.search-container button {
+  padding: 10px 15px;
+  margin-left: 8px;
+  background-color: #2e7d32;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.search-container button:hover {
+  background-color: #1b5e20;
+}
+.product-detail ul {
+  list-style: none;
+  padding: 0;
+  margin-top: 10px;
+  font-size: 14px;
+}
+
+.product-detail li {
+  padding: 4px 0;
+  border-bottom: 1px dotted #ccc;
+}
+.highlight-header {
+  background: linear-gradient(135deg, #2e7d32, #43a047);
+  color: white;
+  text-align: center;
+  padding: 50px 20px;
+  font-family: 'Segoe UI', sans-serif;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+.highlight-header h1 {
+  font-size: 40px;
+  margin: 10px 0;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.highlight-header p {
+  font-size: 18px;
+  margin-top: 8px;
+  color: #e0f2f1;
+}
+.pagination {
+  text-align: center;
+  margin-top: 20px;
+}
+.page-btn {
+  background-color: #ffffff;
+  border: 1px solid #2e7d32;
+  color: #2e7d32;
+  padding: 8px 12px;
+  margin: 0 5px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+}
+.page-btn:hover {
+  background-color: #c8e6c9;
+}
+.logo-fixed {
+  position: fixed;
+  top: 30px;
+  left: 10px;
+  z-index: 1000;
+}
+.logo-fixed img {
+  height: 160px;
+  width: auto;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+</style>
+  <script>
+    function submitForm(event) {
+      event.preventDefault();
+      const ten = document.getElementById("ten").value;
+      const gia = document.getElementById("gia").value;
+      const hinh = document.getElementById("hinh").value || "https://via.placeholder.com/100";
+      const mota = document.getElementById("mota").value;
+const xuatxu = document.getElementById("xuatxu").value;
+const ngay = document.getElementById("ngay").value;
+const tieuchuan = document.getElementById("tieuchuan").value;
+const lienhe = document.getElementById("lienhe").value;
+
+     const html = `
+  <div class="product-item">
+    <img src="${hinh}" alt="Sản phẩm">
+    <div class="product-info">
+      <strong>🛒 ${ten}</strong><br/>
+      <small>${mota}</small><br/>
+      <em>Giá: ${gia} VNĐ</em>
+      <div class="product-detail">
+        <ul>
+          <li><strong>Xuất xứ:</strong> ${xuatxu}</li>
+          <li><strong>Ngày thu hoạch:</strong> ${ngay}</li>
+          <li><strong>Tiêu chuẩn:</strong> ${tieuchuan}</li>
+          <li><strong>Liên hệ người bán:</strong> ${lienhe}</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+`;
+
+      document.getElementById("product-list").innerHTML += html;
+      document.getElementById("form-success").innerText = "🎉 Sản phẩm đã được đăng!";
+      event.target.reset();
+    }
+  </script>
+</head>
+<body>
+  <div class="logo-fixed">
+  <a href="index.html">
+    <img src="https://scontent.fsgn5-9.fna.fbcdn.net/v/t1.15752-9/494857258_1336898017408461_5422686939762103212_n.png?stp=dst-png_s480x480&_nc_cat=102&ccb=1-7&_nc_sid=0024fc&_nc_eui2=AeGUquvVRaPIsXtSKgUllw2Wny-fF0Tz-5WfL58XRPP7laOQlj3j2C4-mhBQGuI1Y_9BcWtBf4lvgS0plW4r-pYn&_nc_ohc=PIC44RlxiqgQ7kNvwHBYAgA&_nc_oc=AdmFQm5VbqJK6DL9pNgr_y0Vw3ud-Eg8_c3PCGysEnAJnZHc6F0GzyYqDbym1YuSFb1MVCKO0qis7FM1VKc51h-k&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=scontent.fsgn5-9.fna&oh=03_Q7cD2gH9zKYlhZI9kzPsqNGrjr6zSGNtL2z7PMEQLjU-6oRvLQ&oe=686C8090" alt="Logo" />
+  </a>
+</div>
+  <div class="overlay">
+    <header class="highlight-header">
+      <h1>🛒 Nông Dân Số - Sản phẩm</h1>
+      <p>Đăng bán và xem nông sản trực tuyến</p>
+    </header>
+
+    <nav>
+  <div class="nav-links">
+    <a href="index.html">🏠 Trang chủ</a>
+    <a href="san-pham.html">📦 Sản phẩm</a>
+    <a href="dien-dan.html">💬 Diễn đàn</a>
+    <a href="mua-vu.html">📅 Mùa vụ</a>
+    <a href="ho-tro.html">🛠 Hỗ trợ</a>
+    <a href="cho-nong-dan.html">🛒 Chợ nông sản</a>
+
+    <a href="dang-nhap.html">🔐 Đăng nhập</a>
+  </div>
+        <div class="search-bar-wrapper">
+    <input type="text" id="global-search" placeholder="🔍 Tìm kiếm..." />
+    <button onclick="searchContent()">Tìm</button>
+  </div>
+</nav>
+    </nav>
+
+
+    <div class="content">
+      <h2>📦 Quản lý sản phẩm</h2>
+    </div>
+
+    <div class="product-container">
+      <!-- Đăng bán bên trái -->
+      <div class="form-wrapper">
+        <h3>📝 Đăng sản phẩm mới</h3>
+        <form onsubmit="submitForm(event)">
+          <label for="ten">📌 Tên sản phẩm:</label>
+          <input type="text" id="ten" name="ten" required />
+
+          <label for="mota">🧾 Mô tả:</label>
+          <textarea id="mota" name="mota" rows="3" required></textarea>
+
+          <label for="gia">💰 Giá bán (VNĐ):</label>
+          <input type="number" id="gia" name="gia" required />
+
+          <label for="hinh">🖼 Link hình ảnh:</label>
+          <input type="url" id="hinh" name="hinh" placeholder="https://..." />
+          <label for="xuatxu">🌍 Xuất xứ:</label>
+<input type="text" id="xuatxu" name="xuatxu" placeholder="VD: Đồng bằng sông Cửu Long" required />
+
+<label for="ngay">📅 Ngày thu hoạch:</label>
+<input type="date" id="ngay" name="ngay" required />
+
+<label for="tieuchuan">📐 Tiêu chuẩn:</label>
+<input type="text" id="tieuchuan" name="tieuchuan" placeholder="VD: VietGAP" required />
+
+<label for="lienhe">📞 Liên hệ người bán:</label>
+<input type="text" id="lienhe" name="lienhe" placeholder="VD: 0912 345 678" required />
+
+          <button type="submit">➕ Đăng bán</button>
+          <div id="form-success" class="success-msg"></div>
+        
+        </form>
+      </div>
+
+      <!-- Danh sách bên phải -->
+      <div class="products">
+        <h3>Danh sách sản phẩm 🌿</h3>
+        <div id="product-list">
+          <div id="pagination" class="pagination"></div>
+          <div class="product-item">
+            <img src="https://iwater.vn/Image/Picture/Gao/gao-chat-viet-st25-thuong-hang-deo-mem-5kg.png" alt="Gạo ST25">
+            <div class="product-info">
+              <strong>Gạo ST25</strong><br/>
+              <small>Gạo thơm, hạt dài, không hóa chất</small><br/>
+              <em>Giá: 25,000 VNĐ/kg</em>
+              <div class="product-detail">
+  <ul>
+    <li><strong>Xuất xứ:</strong> Đồng bằng sông Cửu Long</li>
+    <li><strong>Ngày thu hoạch:</strong> 01/06/2025</li>
+    <li><strong>Tiêu chuẩn:</strong> VietGAP</li>
+    <li><strong>Liên hệ người bán:</strong> 0912 345 678</li>
+  </ul>
+</div>
+            </div>
+          </div>
+          <div class="product-item">
+            <img src="https://images2.thanhnien.vn/528068263637045248/2023/5/5/anh-7-1683254605721253877804.jpg" alt="Nho mẫu đơn">
+            <div class="product-info">
+              <strong>Nho mẫu đơn</strong><br/>
+              <small>Ngọt, giòn, không hạt, trồng theo tiêu chuẩn VietGAP</small><br/>
+              <em>Giá: 50,000 VNĐ/kg</em>
+              <div class="product-detail">
+  <ul>
+    <li><strong>Xuất xứ:</strong> Đồng bằng sông Cửu Long</li>
+    <li><strong>Ngày thu hoạch:</strong> 01/06/2025</li>
+    <li><strong>Tiêu chuẩn:</strong> VietGAP</li>
+    <li><strong>Liên hệ người bán:</strong> 0912 345 678</li>
+  </ul>
+</div>
+
+            </div>
+          </div>
+          <div class="product-item">
+            <img src="https://foody24h.vn/uploads/collections/dua-hau-long-an-3913-2022-02-13.jpg" alt="Dưa hấu ruột đỏ">
+            <div class="product-info">
+              <strong>Dưa hấu ruột đỏ</strong><br/>
+              <small>Ruột ngọt, vỏ mỏng, tưới bằng nước giếng khoan sạch</small><br/>
+              <em>Giá: 12,000 VNĐ/kg</em>
+              <div class="product-detail">
+  <ul>
+    <li><strong>Xuất xứ:</strong> Đồng bằng sông Cửu Long</li>
+    <li><strong>Ngày thu hoạch:</strong> 01/06/2025</li>
+    <li><strong>Tiêu chuẩn:</strong> VietGAP</li>
+    <li><strong>Liên hệ người bán:</strong> 0912 345 678</li>
+  </ul>
+</div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+    <footer>
+      © 2025 Nông Dân Số. Tất cả quyền được bảo lưu.
+    </footer>
+  </div>
+<!--Start of Tawk.to Script-->
+<script type="text/javascript">
+var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+(function(){
+var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+s1.async=true;
+s1.src='https://embed.tawk.to/6843ceb7706334190d799675/1it4duvcc';
+s1.charset='UTF-8';
+s1.setAttribute('crossorigin','*');
+s0.parentNode.insertBefore(s1,s0);
+})();
+</script>
+<!--End of Tawk.to Script-->
+
+<script>
+  function searchContent() {
+    const keyword = document.getElementById("global-search").value.toLowerCase();
+
+    if (!keyword.trim()) {
+      alert("Vui lòng nhập từ khóa tìm kiếm.");
+      return;
+    }
+
+    // Danh sách các từ khóa và trang tương ứng
+    const pages = [
+      { keyword: "gạo", url: "san-pham.html" },
+      { keyword: "sản phẩm", url: "san-pham.html" },
+      { keyword: "diễn đàn", url: "dien-dan.html" },
+      { keyword: "bài viết", url: "dien-dan.html" },
+      { keyword: "hỗ trợ", url: "ho-tro.html" },
+      { keyword: "sâu bệnh", url: "ho-tro.html" },
+      { keyword: "mùa vụ", url: "mua-vu.html" },
+      { keyword: "thời tiết", url: "mua-vu.html" },
+      { keyword: "trang chủ", url: "index.html" },
+    ];
+
+    // Tìm trang phù hợp
+    const match = pages.find(p => keyword.includes(p.keyword));
+
+    if (match) {
+      window.location.href = match.url;
+    } else {
+      alert("❌ Không tìm thấy nội dung phù hợp. Vui lòng thử lại.");
+    }
+  }
+</script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const ten = localStorage.getItem("nguoiDung");
+    const nav = document.querySelector("nav");
+
+    if (ten && nav) {
+      // Xoá nút Đăng nhập nếu có
+      const loginLink = [...nav.querySelectorAll("a")].find(a => a.textContent.includes("Đăng nhập"));
+      if (loginLink) loginLink.remove();
+
+      // Tạo vùng chứa tên + nút đăng xuất
+      const userWrapper = document.createElement("div");
+      userWrapper.style.display = "flex";
+      userWrapper.style.alignItems = "center";
+      userWrapper.style.gap = "10px";
+      userWrapper.style.marginLeft = "10px";
+
+      const userName = document.createElement("span");
+      userName.textContent = `👤 Xin chào, ${ten}`;
+      userName.style.fontWeight = "bold";
+
+      const logoutBtn = document.createElement("button");
+      logoutBtn.textContent = "🔓 Đăng xuất";
+      logoutBtn.style.padding = "6px 10px";
+      logoutBtn.style.border = "none";
+      logoutBtn.style.backgroundColor = "#c62828";
+      logoutBtn.style.color = "#fff";
+      logoutBtn.style.borderRadius = "6px";
+      logoutBtn.style.cursor = "pointer";
+
+      logoutBtn.onclick = () => {
+        localStorage.removeItem("nguoiDung");
+        location.reload(); // Làm mới trang sau khi đăng xuất
+      };
+
+      userWrapper.appendChild(userName);
+      userWrapper.appendChild(logoutBtn);
+      nav.appendChild(userWrapper);
+    }
+  });
+</script>
+<script>
+  const productsPerPage = 3;
+
+  function renderPagination(totalPages) {
+    const container = document.getElementById('pagination');
+    container.innerHTML = '';
+    for (let i = 1; i <= totalPages; i++) {
+      const btn = document.createElement('button');
+      btn.className = 'page-btn';
+      btn.innerText = i;
+      btn.onclick = () => changePage(i);
+      container.appendChild(btn);
+    }
+  }
+
+  function changePage(pageNumber) {
+    const allProducts = document.querySelectorAll('.product-item');
+    allProducts.forEach((product, index) => {
+      const start = (pageNumber - 1) * productsPerPage;
+      const end = start + productsPerPage;
+      product.style.display = (index >= start && index < end) ? "flex" : "none";
+    });
+  }
+
+  window.onload = () => {
+    const allProducts = document.querySelectorAll('.product-item');
+    const totalPages = Math.ceil(allProducts.length / productsPerPage);
+    renderPagination(totalPages);
+    changePage(1);
+  };
+</script>
+
+</body>
+</html>
+

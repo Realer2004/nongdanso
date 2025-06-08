@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <script>
+  if (!localStorage.getItem("nguoiDung")) {
+    window.location.href = "dang-nhap.html"; // Chuyển về trang đăng nhập
+  }
+</script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Chợ Nông Dân</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      color: #2e7d32;
+      position: relative;
+      z-index: 1;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url('https://chatgpt.com/backend-api/public_content/enc/...');
+      background-size: cover;
+      background-position: center;
+      filter: blur(3px) brightness(0.85);
+      z-index: -1;
+    }
+    .overlay {
+      background-color: rgba(255, 255, 255, 0.9);
+      padding: 0px 0;
+      min-height: 100vh;
+    }
+    header {
+      background: linear-gradient(135deg, #2e7d32, #43a047);
+      color: white;
+      text-align: center;
+      padding: 48px 30px;
+    }
+    header h1 {
+      font-size: 36px;
+      margin-bottom: 5px;
+    }
+    nav {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #c8e6c9;
+      padding: 10px 20px;
+      gap: 10px;
+    }
+    .nav-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .nav-links a {
+      text-decoration: none;
+      color: #2e7d32;
+      font-weight: bold;
+      background-color: #ffffff;
+      padding: 10px 15px;
+      border-radius: 6px;
+      font-size: 16px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .nav-links a:hover {
+      background-color: #a5d6a7;
+    }
+    .market-title {
+      text-align: center;
+      margin: 20px;
+      font-size: 24px;
+      color: #2e7d32;
+    }
+    #market-list {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      padding: 20px;
+    }
+    .market-item {
+      background: white;
+      border: 1px solid #c8e6c9;
+      border-radius: 8px;
+      padding: 10px;
+      width: 250px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .market-item img {
+      max-width: 100%;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 6px;
+    }
+    .market-info {
+      text-align: center;
+      margin-top: 10px;
+    }
+    .pagination {
+      text-align: center;
+      margin: 20px 0;
+    }
+    .page-btn {
+      background-color: #ffffff;
+      border: 1px solid #2e7d32;
+      color: #2e7d32;
+      padding: 8px 12px;
+      margin: 0 5px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    .page-btn:hover {
+      background-color: #c8e6c9;
+    }
+    footer {
+      background-color: #2e7d32;
+      color: white;
+      text-align: center;
+      padding: 20px;
+      margin-top: 30px;
+    }
+  .buy-btn {
+  margin-top: 8px;
+  padding: 8px 12px;
+  background-color: #2e7d32;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+}
+.buy-btn:hover {
+  background-color: #1b5e20;
+}
+.search-bar-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.search-bar-wrapper input {
+  padding: 10px 15px;
+  font-size: 16px;
+  width: 200px;
+  min-width: 180px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+.search-bar-wrapper button {
+  padding: 10px 15px;
+  font-size: 16px;
+  background-color: #2e7d32;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.search-bar-wrapper button:hover {
+  background-color: #1b5e20;
+}
+.logo-fixed {
+  position: fixed;
+  top: 30px;
+  left: 10px;
+  z-index: 1000;
+}
+.logo-fixed img {
+  height: 160px;
+  width: auto;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+
+</style>
+</head>
+<body>
+  <div class="logo-fixed">
+  <a href="index.html">
+    <img src="https://scontent.fsgn5-9.fna.fbcdn.net/v/t1.15752-9/494857258_1336898017408461_5422686939762103212_n.png?stp=dst-png_s480x480&_nc_cat=102&ccb=1-7&_nc_sid=0024fc&_nc_eui2=AeGUquvVRaPIsXtSKgUllw2Wny-fF0Tz-5WfL58XRPP7laOQlj3j2C4-mhBQGuI1Y_9BcWtBf4lvgS0plW4r-pYn&_nc_ohc=PIC44RlxiqgQ7kNvwHBYAgA&_nc_oc=AdmFQm5VbqJK6DL9pNgr_y0Vw3ud-Eg8_c3PCGysEnAJnZHc6F0GzyYqDbym1YuSFb1MVCKO0qis7FM1VKc51h-k&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=scontent.fsgn5-9.fna&oh=03_Q7cD2gH9zKYlhZI9kzPsqNGrjr6zSGNtL2z7PMEQLjU-6oRvLQ&oe=686C8090" alt="Logo" />
+  </a>
+</div>
+  <div class="overlay">
+    <header>
+      <h1>🛍 Chợ Nông sản</h1>
+      <p>Nơi người dân đăng bán nông sản trực tuyến</p>
+    </header>
+
+    <nav>
+      <div class="nav-links">
+        <a href="index.html">🏠 Trang chủ</a>
+        <a href="san-pham.html">📦 Sản phẩm</a>
+        <a href="dien-dan.html">💬 Diễn đàn</a>
+        <a href="mua-vu.html">📅 Mùa vụ</a>
+        <a href="ho-tro.html">🛠 Hỗ trợ</a>
+        <a href="cho-nong-dan.html">🛒 Chợ nông sản</a>
+
+        <a href="dang-nhap.html">🔐 Đăng nhập</a>
+      </div>
+      <div class="search-bar-wrapper">
+        <input type="text" id="global-search" placeholder="🔍 Tìm kiếm..." />
+        <button onclick="searchContent()">Tìm</button>
+      </div>
+    </nav>
+
+    <div class="market-title">🌾 Sản phẩm đang được rao bán</div>
+    <div id="market-list"><!-- sản phẩm sẽ hiển thị bằng JS --></div>
+    <div id="pagination" class="pagination"></div>
+
+    <footer>© 2025 Nông Dân Số. Tất cả quyền được bảo lưu.</footer>
+  </div>
+<script>
+const products = [
+  {
+    ten: "Gạo ST25",
+    mota: "Gạo thơm, hạt dài, đạt chuẩn VietGAP",
+    gia: "25,000 VNĐ/kg",
+    anh: "https://iwater.vn/Image/Picture/Gao/gao-chat-viet-st25-thuong-hang-deo-mem-5kg.png"
+  },
+  {
+    ten: "Nho mẫu đơn",
+    mota: "Nho không hạt, ngọt giòn, mới thu hoạch",
+    gia: "50,000 VNĐ/kg",
+    anh: "https://images2.thanhnien.vn/528068263637045248/2023/5/5/anh-7-1683254605721253877804.jpg"
+  },
+  {
+    ten: "Dưa hấu ruột đỏ",
+    mota: "Ruột đỏ mọng, trồng sạch",
+    gia: "12,000 VNĐ/kg",
+    anh: "https://foody24h.vn/uploads/collections/dua-hau-long-an-3913-2022-02-13.jpg"
+  },
+  {
+    ten: "Cà chua hữu cơ",
+    mota: "Tươi sạch, không thuốc trừ sâu",
+    gia: "18,000 VNĐ/kg",
+    anh: "https://suckhoedoisong.qltns.mediacdn.vn/324455921873985536/2021/9/25/tac-dung-cua-ca-chua-doi-voi-suc-khoe-1-1632310636-831-width640height427-1632567723926-16325677242441321628137.jpg"
+  },
+  {
+    ten: "Rau muống nước",
+    mota: "Tươi sống, gói 300g",
+    gia: "7,000 VNĐ/bó",
+    anh: "https://lh6.googleusercontent.com/proxy/lCfMx75kJ6f1gPGmyD4XaF6BzN1yy_Bl4gZXBIiCkn0bAJYbxOfjMAgH19LFZ73jhTsGkx6GsVfYePPch3FRHP54JBayxETloMOseq-Td-yQoKtzu1jvhfP1Yvnz6iZnpw"
+  },
+  {
+    ten: "Khoai lang mật",
+    mota: "Ngọt tự nhiên, ruột vàng",
+    gia: "22,000 VNĐ/kg",
+    anh: "https://cdn-i.vtcnews.vn/resize/th/upload/2024/09/16/untitled-1-09020008.jpg"
+  },
+  {
+    ten: "Bắp cải Đà Lạt",
+    mota: "Tươi giòn, trồng hữu cơ",
+    gia: "12,000 VNĐ/kg",
+    anh: "https://nongsandalat.vn/wp-content/uploads/2021/10/Bap-cai-trang-dalavi.jpg"
+  },
+  {
+    ten: "Đậu que non",
+    mota: "Giòn, tươi mới hái",
+    gia: "15,000 VNĐ/kg",
+    anh: "https://thanhnien.mediacdn.vn/Uploaded/ngocthanh/2017_08_23/daucove_zztn_NYXP.jpg"
+  },
+  {
+    ten: "Xoài cát chu",
+    mota: "Ngọt đậm, vỏ mỏng",
+    gia: "30,000 VNĐ/kg",
+    anh: "https://xoaichuchin.com/wp-content/uploads/2017/01/DSC_0544-e1554610350172.jpg"
+  },
+  {
+    ten: "Ổi lê không hạt",
+    mota: "Giòn ngọt, an toàn",
+    gia: "20,000 VNĐ/kg",
+    anh: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSwaOKHL40bl7E8wOJfFel4x7bfmxz_63XAZw&s"
+  }
+];
+
+const productsPerPage = 3;
+
+function renderProducts(page = 1) {
+  const list = document.getElementById("market-list");
+  list.innerHTML = "";
+  const start = (page - 1) * productsPerPage;
+  const end = start + productsPerPage;
+  products.slice(start, end).forEach(p => {
+    list.innerHTML += `
+      <div class="market-item">
+        <img src="${p.anh}" alt="${p.ten}" />
+        <div class="market-info">
+          <strong>${p.ten}</strong><br/>
+          <small>${p.mota}</small><br/>
+          <em>Giá: ${p.gia}</em>
+          <button class="buy-btn" onclick="muaSanPham('${p.ten}')">🛒 Mua ngay</button>
+        </div>
+      </div>
+    `;
+  });
+}
+
+function renderPagination() {
+  const totalPages = Math.ceil(products.length / productsPerPage);
+  const pag = document.getElementById("pagination");
+  pag.innerHTML = "";
+  for (let i = 1; i <= totalPages; i++) {
+    const btn = document.createElement("button");
+    btn.className = "page-btn";
+    btn.textContent = i;
+    btn.onclick = () => renderProducts(i);
+    pag.appendChild(btn);
+  }
+}
+
+window.onload = () => {
+  renderProducts(1);
+  renderPagination();
+};
+</script>
+<script>
+function searchContent() {
+  const keyword = document.getElementById("global-search").value.toLowerCase();
+  if (!keyword.trim()) {
+    alert("Vui lòng nhập từ khóa tìm kiếm.");
+    return;
+  }
+
+  const pages = [
+    { keyword: "gạo", url: "san-pham.html" },
+    { keyword: "sản phẩm", url: "san-pham.html" },
+    { keyword: "diễn đàn", url: "dien-dan.html" },
+    { keyword: "bài viết", url: "dien-dan.html" },
+    { keyword: "hỗ trợ", url: "ho-tro.html" },
+    { keyword: "sâu bệnh", url: "ho-tro.html" },
+    { keyword: "mùa vụ", url: "mua-vu.html" },
+    { keyword: "trang chủ", url: "index.html" },
+    { keyword: "chợ", url: "cho-nong-dan.html" }
+  ];
+
+  const match = pages.find(p => keyword.includes(p.keyword));
+  if (match) {
+    window.location.href = match.url;
+  } else {
+    alert("❌ Không tìm thấy nội dung phù hợp. Vui lòng thử lại.");
+  }
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+  const ten = localStorage.getItem("nguoiDung");
+  const nav = document.querySelector("nav");
+
+  if (ten && nav) {
+    const loginLink = [...nav.querySelectorAll("a")].find(a => a.textContent.includes("Đăng nhập"));
+    if (loginLink) loginLink.remove();
+
+    const userWrapper = document.createElement("div");
+    userWrapper.style.display = "flex";
+    userWrapper.style.alignItems = "center";
+    userWrapper.style.gap = "10px";
+    userWrapper.style.marginLeft = "10px";
+
+    const userName = document.createElement("span");
+    userName.textContent = `👤 Xin chào, ${ten}`;
+    userName.style.fontWeight = "bold";
+
+    const logoutBtn = document.createElement("button");
+    logoutBtn.textContent = "🔓 Đăng xuất";
+    logoutBtn.style.padding = "6px 10px";
+    logoutBtn.style.border = "none";
+    logoutBtn.style.backgroundColor = "#c62828";
+    logoutBtn.style.color = "#fff";
+    logoutBtn.style.borderRadius = "6px";
+    logoutBtn.style.cursor = "pointer";
+
+    logoutBtn.onclick = () => {
+      localStorage.removeItem("nguoiDung");
+      location.reload();
+    };
+
+    userWrapper.appendChild(userName);
+    userWrapper.appendChild(logoutBtn);
+    nav.appendChild(userWrapper);
+  }
+});
+</script>
+
+<!-- 🛒 Xử lý nút Mua -->
+<script>
+function muaSanPham(tenSanPham) {
+  alert(`✅ Bạn đã chọn mua: ${tenSanPham}. Chức năng thanh toán sẽ sớm được cập nhật!`);
+}
+</script>
+
+</body>
+</html>
